@@ -653,6 +653,18 @@
       .reveal { opacity: 1; transform: none; transition: none; }
       .comp:hover, .checkout-card:hover { transform: none; }
     }
+  
+    /* ---------- shop nav ---------- */
+    .hero-nav { margin-top: 14px; display: flex; gap: 10px; }
+    .shop-link { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.38); color: #fff; font-weight: 700; text-decoration: none; backdrop-filter: blur(6px); }
+    .shop-link:hover { background: rgba(255,255,255,.26); }
+    .shop-link svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .shop-hero { border-radius: 22px; overflow: hidden; margin: 26px auto 0; max-width: 1060px; padding: 34px 34px 30px; background: linear-gradient(135deg, #0b2e1d, #078348 60%, #0cbf69); color: #fff; box-shadow: var(--shadow); }
+    .shop-hero h1 { margin: 10px 0 6px; font-size: clamp(30px, 5vw, 44px); display: flex; align-items: center; gap: 12px; }
+    .shop-hero h1 svg { width: 34px; height: 34px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .shop-hero p { margin: 0; opacity: .92; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: #fff; font-weight: 700; text-decoration: none; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.35); padding: 7px 14px; border-radius: 999px; font-size: 14px; }
+    .back-link:hover { background: rgba(255,255,255,.28); }
   </style>
 </head>
 <body>
@@ -661,6 +673,12 @@
       <div class="hero-title">
         <h1>Nova Nexus 3</h1>
         <p>Live status for the Nova Nexus 3 and Jarvis community bots &mdash; incidents, uptime, and updates.</p>
+      <nav class="hero-nav" aria-label="Site">
+        <a class="shop-link" href="shop.html">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8h13l-1 12.5h-11z"/><path d="M9 8V6.5a3 3 0 016 0V8"/></svg>
+          Shop
+        </a>
+      </nav>
       </div>
       <div class="hero-profile" id="hero-profile">
         <div class="hero-login-card">
@@ -803,38 +821,6 @@
       <p class="form-msg" id="rep-msg" aria-live="polite"></p>
     </section>
 
-    <section class="panel" id="premium" aria-labelledby="premium-heading">
-      <h2 id="premium-heading">Premium <span class="price-badge">$200</span></h2>
-      <p class="panel-sub">One upgrade for your whole server. Free commands stay free forever &mdash; premium adds the extras.</p>
-
-      <div class="checkout-card" id="premium-checkout">
-        <h3>Get Premium</h3>
-        <div class="checkout-price">$200 <span>one-time</span></div>
-        <p class="checkout-note">Secure checkout via Ko-fi. After you buy, message us on Ko-fi with your Discord server ID and tell us exactly what you want added to the bot &mdash; that's how we set it up for you.</p>
-        <div class="btn-row">
-          <a class="btn" id="premium-buy-btn" href="https://ko-fi.com/s/5b8dc1e385" target="_blank" rel="noopener noreferrer">Buy Premium</a>
-          <a class="btn ghost" href="#subscribe">Notify me instead</a>
-        </div>
-      </div>
-
-      <h3 class="mini-heading">Coming in the first version</h3>
-      <ul class="feature-list">
-        <li><strong>Custom AI knowledge</strong> &mdash; teach the bot your server&rsquo;s own FAQ. It answers from your knowledge first, then the engine docs. <code>/knowledge add|remove|list</code></li>
-        <li><strong>Custom commands</strong> &mdash; your own <code>!commands</code> with your own replies. <code>/customcmd add|remove|list</code></li>
-        <li><strong>Scheduled announcements</strong> &mdash; one-time, daily, or weekly posts, sent automatically. <code>/schedule add|remove|list</code></li>
-      </ul>
-
-      <h3 class="mini-heading">Ideas in the works</h3>
-      <p class="panel-sub">Not built yet &mdash; this list grows as new ideas land.</p>
-      <ul class="feature-list ideas" id="premium-ideas">
-        <li><strong>Custom welcome messages</strong> &mdash; designed embeds that greet new members your way.</li>
-        <li><strong>Reaction roles</strong> &mdash; let members pick their own roles with an emoji tap.</li>
-        <li><strong>Polls &amp; giveaways</strong> &mdash; run votes and prize draws without another bot.</li>
-        <li><strong>Leveling &amp; XP</strong> &mdash; reward active members with ranks for chatting and helping.</li>
-        <li><strong>Moderation tuning</strong> &mdash; your own word lists and strike limits for the swear filter.</li>
-        <li><strong>Server analytics</strong> &mdash; see which commands get used and when your server is most active.</li>
-      </ul>
-    </section>
 
     <aside class="github-status" aria-labelledby="github-status-heading">
       <span class="github-mark" aria-hidden="true"></span>
@@ -857,7 +843,11 @@
   <script>
     /* One switch controls the full incident presentation.
        Change STATE to "down" when a real outage is confirmed and rebuild. */
-    const STATE = "operational";
+    let STATE = "operational";
+    try {
+      const q = new URLSearchParams(location.search).get("state");
+      if (q === "down" || q === "operational") STATE = q; /* preview override */
+    } catch (e) {}
     document.documentElement.dataset.state = STATE;
     document.getElementById('stamp').textContent = 'STATUS / ' + STATE.toUpperCase();
 
