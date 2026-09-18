@@ -621,7 +621,9 @@
       color: var(--muted);
       font-size: 13px;
       line-height: 1.6;
+      flex-wrap: wrap;
     }
+    .privacy-note { width: 100%; font-size: 12.5px; color: var(--muted); opacity: .85; }
     .footer-note p { margin: 0; max-width: 620px; }
     .stamp { font-family: "IBM Plex Mono", monospace; white-space: nowrap; }
 
@@ -837,6 +839,7 @@
         <span class="down-copy">The Discord bot is currently unavailable. Service will remain down while the malfunction is addressed.</span>
       </p>
       <span class="stamp" id="stamp">STATUS / OPERATIONAL</span>
+      <p class="privacy-note">Notification emails are only used for status alerts &mdash; never shared, never sold.</p>
     </footer>
   </main>
 
